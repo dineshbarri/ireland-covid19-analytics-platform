@@ -6,7 +6,7 @@
   </p>
 
   <p>
-    <a href="https://dinesh-ireland-covid19-analyticss.netlify.app/
+    <a href="https://dineshbarri-ireland-covid19-analysis.netlify.app
 /" target="_blank">
       🚀 <b>Live Dashboard</b>
     </a>
