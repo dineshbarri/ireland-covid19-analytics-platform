@@ -12,7 +12,7 @@
     </a>
   </p>
 
-  <img src="" alt="COVID-19 Dashboard Preview" width="80%" style="border-radius:12px; border:2px solid #ccc; margin-top:10px;">
+  <img src=" " alt="COVID-19 Dashboard Preview" width="80%" style="border-radius:12px; border:2px solid #ccc; margin-top:10px;">
 </div>
 
 ---
