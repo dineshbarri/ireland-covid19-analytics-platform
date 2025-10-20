@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/libraries/dc4/dc.css" />
+  <link rel="stylesheet" href="static/libraries/leaflet/leaflet.css">
+  <link rel="stylesheet" href="static/libraries/dc-leaflet/leaflet-legend.css" />
+  <link rel="stylesheet" href="static/css/style.css">
+
+  <script src="https://kit.fontawesome.com/7107e9ede6.js" crossorigin="anonymous"></script>
+
+  <title>Ireland Covid19 Dashboard</title>
+</head>
+
+<body class="loading">
+  <nav class="navbar fixed-top navbar-dark bg-dark">
+    <div class="container">
+      <div class="flexer navbar-header">
+        <!-- <img height="50" src="static/aib.png" /> -->
+        <a class="navbar-brand" href="#">Ireland - COVID19 Data</a>
+      </div>
+    </div>
+  </nav>
+
+<div class="loading-cover">
+    <div class="spinner-border text-primary" role="status" style="/* margin-left: 46%; */margin-top: 23%;">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <h2>Loading Data...</h2>
+</div>
+
+  <main class="container">
+    <h1>Covid-19 in Numbers</h1>
+    <section class="row covid-in-numbers">
+      <div class="col-12">
+        <article>
+          <h5 class="text-uppercase">Total Cases</h5>
+          <div id="total-cases"><i class="fas fa-virus"></i></div>
+        </article>
+        <article>
+          <h5 class="text-uppercase">Total Deaths</h5>
+          <div id="total-deaths"><i class="fas fa-book-medical"></i></div>
+        </article>
+        <article>
+          <h5 class="text-uppercase">Total Recovered</h5>
+          <div id="total-recovered"><i class="fas fa-user-check"></i></div>
+        </article>
+      </div>
+      <div class="col-12">
+        <article>
+          <h5 class="text-uppercase">Total Hospitalised Cases</h5>
+          <div id="hospitalised-cases"><i class="fas fa-hospital"></i></div>
+        </article>
+        <article>
+          <h5 class="text-uppercase">Of Which Require ICU</h5>
+          <div id="icu-cases"><i class="fas fa-procedures"></i></div>
+        </article>
+        <article>
+          <h5 class="text-uppercase">Total Health Worker Cases</h5>
+          <div id="health-worker-cases"><i class="fas fa-user-nurse"></i></div>
+        </article>
+      </div>
+      <div class="col-12 col-sm-6">
+        <div id="stackedBarAge"></div>
+      </div>
+      <div class="col-12 col-sm-3">
+        <div id="barCasesGender"></div>
+      </div>
+      <!-- <div class="col-4">
+        <div id="lineHospitalisedCases"></div>
+      </div> -->
+
+      <div id="total-hospitalisations"></div>
+      <div id="total-requiredIcu"></div>
+      <div id="total-healthcareWorkers"></div>
+
+      <svg height="200" style="background-color: none" class="col-12 timeline mt-3">
+        <!-- draw rectangles -->
+        <g transform="translate(0, 50)" id="phase-chart">
+          <rect y="30" x="0.0%"  width="7.5%"  height="40" style="fill:rgb(8,48,107)" />
+          <rect y="30" x="7.5%"  width="8.1%"  height="40" style="fill:rgb(8,81,156)" />
+          <rect y="30" x="15.6%" width="18.8%" height="40" style="fill:rgb(33,113,181)" />
+          <rect y="30" x="34.4%" width="9.1%"  height="40" style="fill:rgb(66,146,198)" />
+          <rect y="30" x="43.5%" width="11.3%" height="40" style="fill:rgb(107,174,214)" />
+          <rect y="30" x="54.8%" width="11.3%" height="40" style="fill:rgb(158,202,225)" />
+          <rect y="30" x="66.1%" width="11.3%" height="40" style="fill:rgb(198,219,239)" />
+          <rect y="30" x="77.4%" width="11.3%" height="40" style="fill:rgb(222,235,247)" />
+          <rect y="30" x="88.7%" width="11.3%" height="40" style="fill:rgb(247,251,255)" />
+        </g>
+
+        <!-- text for phase -->
+        <g transform="translate(0, 50)">
+          <text text-anchor="middle" x="3.75%"  y="60" fill="white">Containment</text>
+          <text text-anchor="middle" x="11.55%" y="60" fill="white">Delay</text>
+          <text text-anchor="middle" x="25%"    y="60" fill="white">Stay at Home</text>
+          <text text-anchor="middle" x="38.95%" y="60" fill="white">Restrictions Eased</text>
+          <text text-anchor="middle" x="49.15%" y="60" fill="white"><a href="https://www.gov.ie/en/publication/ad5dd0-easing-the-covid-19-restrictions-on-may-18-phase-1/" target="_blank">Exit Phase 1</a></text>
+          <text text-anchor="middle" x="60.45%" y="60" fill="black"><a href="https://www.gov.ie/en/publication/7ae99f-easing-the-covid-19-restrictions-on-june-8-phase-2/" target="_blank">Exit Phase 2</a></text>
+          <text text-anchor="middle" x="71.75%" y="60" fill="black"><a href="https://www.gov.ie/en/publication/d06271-easing-the-covid-19-restrictions-on-29-june-phase-3/" target="_blank">Exit Phase 3</a></text>
+          <text text-anchor="middle" x="83.05%" y="60" fill="black"><a href="https://www.gov.ie/en/publication/acc4de-easing-the-covid-19-restrictions-on-20-july-phase-4/" target="_blank">Exit Phase 4</a></text>
+          <text text-anchor="middle" x="94.35%" y="60" fill="black"><a href="https://www.gov.ie/en/publication/dd26a8-easing-the-covid-19-restrictions-on-10-august/" target="_blank">Exit Phase 5</a></text>
+        </g>
+
+        <!-- add dates -->
+        <g transform="translate(0, 70)">
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(0%, 0)"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start;transform: translate(0%, 0)rotate(315deg);">27th Feb</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(7.5%, 0)"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start;transform: translate(7.5%, 0)rotate(315deg);">12th March</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(15.6%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(15.6%, 0)rotate(315deg);">27th March</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(34.4%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(34.4%, 0)rotate(315deg);">1st May</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(43.5%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(43.5%, 0)rotate(315deg);">18th May</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(54.8%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(54.8%, 0)rotate(315deg);">8th June</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(66.1%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(66.1%, 0)rotate(315deg);">29th June</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(77.4%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(77.4%, 0)rotate(315deg);">20th July</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(88.7%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(88.7%, 0)rotate(315deg);">10th August</text>
+          </g>
+          <g transform="translate(0,0)" style="opacity: 1;">
+            <line y2="10" x2="0" style="stroke:black;transform: translate(100%, 0);"></line>
+            <text class="" y="0" dy="0" style="text-anchor: start; transform: translate(100%, 0)rotate(315deg);">31st August</text>
+          </g>
+        </g>
+
+        <g transform="translate(0, 120)" id="phase-location">
+          <path d="M0 0 l5 20 l-10 0 z"></path>
+          <path d="M0 20 l0 20 l-10 0" stroke="black" stroke-width="0.5" fill="none"></path>
+          <text x="-10"y="0" dy="45" style="text-anchor: end;">We Are Here</text>
+        </g>
+
+      </svg>
+
+    </section>
+
+    <h1>County Dataset</h1>
+    <section class="row">
+      <div class="col-12 col-sm-4 text-center">
+        <p class="mb-0">Total Cases by County</p>
+        <div id="chart01" class="custom-chart"></div>
+      </div>
+      <div class="col-12 col-sm-4 text-center">
+        <p class="mb-0">Total Cases by County</p>
+        <div id="map" class="custom-chart"></div>
+      </div>
+      <div class="col-12 col-sm-4 text-center">
+        <p class="mb-0">Total Cases by Province</p>
+        <div id="chart02" class="custom-chart"></div>
+      </div>
+      <div class="col-12 mt-5 text-center">
+        <p class="mb-0">Cases announced per Day</p>
+        <div id="cases-per-day" class="custom-chart">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="option1" autocomplete="off"
+                onclick="toggleSeriesLine('cases-per-day','0')"> 1 Day
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option2" autocomplete="off"
+                onclick="toggleSeriesLine('cases-per-day','1')"> 3 Day
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option3" autocomplete="off"
+                onclick="toggleSeriesLine('cases-per-day','2')"> 7 Day
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-5 text-center d-none">
+        <p class="mb-0">Cases announced per Day</p>
+        <div id="chart03" class="custom-chart"></div>
+      </div>
+      <div class="col-12 mt-5 text-center d-none">
+        <p class="mb-0">Cases announced per Day: 3 Day Average</p>
+        <div id="chart04" class="custom-chart"></div>
+      </div>
+      <div class="col-12 mt-5 text-center d-none">
+        <p class="mb-0">Cases announced per Day: 7 Day Average</p>
+        <div id="chart05" class="custom-chart"></div>
+      </div>
+    </section>
+    <h1>Cases/Deaths Dataset</h1>
+    <section class="row">
+      <div class="col-12 text-center">
+        <p class="mb-0">Cases on a National Level</p>
+        <div id="casesAndDeaths01" class="custom-chart">
+
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="option1" autocomplete="off"
+                onclick="toggleSeriesLine('casesAndDeaths01','0')"> 1 Day
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option2" autocomplete="off"
+                onclick="toggleSeriesLine('casesAndDeaths01','1')"> 3 Day
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option3" autocomplete="off"
+                onclick="toggleSeriesLine('casesAndDeaths01','2')"> 7 Day
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 text-center mt-5">
+        <p class="mb-0">Deaths on a National Level</p>
+        <div id="casesAndDeaths02" class="custom-chart">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="option1" autocomplete="off"
+                onclick="toggleSeriesLine('casesAndDeaths02','0')"> 1 Day
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option2" autocomplete="off"
+                onclick="toggleSeriesLine('casesAndDeaths02','1')"> 3 Day
+            </label>
+            <label class="btn btn-secondary">
+              <input type="radio" name="options" id="option3" autocomplete="off"
+                onclick="toggleSeriesLine('casesAndDeaths02','2')"> 7 Day
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="navbar mt-5">
+    <div class="container">
+      <div class="footer-holder">
+        <p>Brian Lynch</p><a target="_blank" href="https://www.linkedin.com/in/brian-lynch-b5908655">Linkedin</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <!-- ** Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <!-- ** Charting libraries -->
+  <script src="static/libraries/d3v5/d3.v5.min.js"></script>
+  <script src="static/libraries/crossfilter/crossfilter.min.js"></script>
+  <script src="static/libraries/dc4/dc.js"></script>
+  <script src="static/libraries/leaflet/leaflet.js"></script>
+  <script src="static/libraries/dc-leaflet/dc.leaflet.js"></script>
+  <script src="static/js/graph.js"></script>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89813036-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-89813036-2');
+  </script>
+</body>
+
+</html>

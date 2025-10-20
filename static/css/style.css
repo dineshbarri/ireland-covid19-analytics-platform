@@ -1,0 +1,149 @@
+main{
+    margin-top: 56px;
+}
+
+#chart01 g.row text{fill: #000;}
+
+#chart01 g.axis, 
+#casesAndDeaths01 g.dc-legend, 
+#cases-per-day g.dc-legend, 
+#casesAndDeaths02 g.dc-legend  {display: none;}
+
+#chart01 g.row._12 rect {fill-opacity: .4;}
+
+#chart02 g.axis.y,
+#barCasesGender g.axis.y,
+#stackedBarAge g.axis.y{display: none;}
+
+#chart02 .x .tick line,
+#barCasesGender .x .tick line,
+#stackedBarAge .x .tick line {display: none;}
+
+#chart02 .x path.domain,
+#barCasesGender .x path.domain,
+#stackedBarAge .x path.domain{display: none;}
+
+#chart02 text,
+#barCasesGender text,
+#stackedBarAge text,
+.timeline text {
+    font-size: 0.8rem;
+    font-weight: 200;
+}
+
+#barCasesGender rect,
+#stackedBarAge rect {cursor: default;}
+
+#barCasesGender rect:hover,
+#stackedBarAge rect:hover  {fill-opacity: 1;}
+
+/* map styling */
+.info.legend.leaflet-control {
+    font-size: 0.7rem;
+    text-align: start;
+}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 0px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 0px;
+    }
+
+.covid-in-numbers h5{
+    font-size: 14px;
+    margin-top: 14px;
+    margin-bottom: 0px;
+    font-weight: 300;
+    color: #4c4c4c;
+}
+.covid-in-numbers .number-display{
+    color: #3182bd;
+    font-weight: bold;
+    font-size: 24px;
+}
+.covid-in-numbers article{
+    float: left;
+    margin-right: 75px;
+    margin-bottom: 40px;
+}
+
+
+.container{
+    max-width: 1320px;
+}
+i {
+    font-size: 22px;
+    margin-right: 14px;
+    color: #154d75;
+}
+
+/* time line */
+svg.col-12.timeline {
+    overflow: visible;
+}
+
+/* footer */
+footer p {
+    float: left;
+    margin-bottom: 0;
+}
+
+footer a {
+    float: right;
+}
+
+.footer-holder {
+    min-width: 156px;
+    margin: auto;
+    padding: 14px 0px;
+}
+
+footer {
+    background-color: #cdd5de;
+}
+
+.loading{
+    height: 100%;
+    overflow: hidden;
+}
+
+.loading-cover {
+    position: absolute;
+    background: white;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    text-align: center;
+}
+
+.btn{
+    border-radius: 0;
+}
+
+.btn-secondary {
+    color: black;
+    background-color: #deebf7;
+    border-color: #a5b0b9;
+    font-weight: 100;
+    font-size: 13px;
+    font-variant-caps: all-small-caps;
+}
+
+.btn-group{
+    position: absolute;
+    top: 0px;
+    right: 60px;
+}
+
+h1 {
+    font-weight: 100;
+    border-bottom: 1px solid black;
+    width: 33%;
+    margin: 60px 0px 30px 0px;
+    font-variant: small-caps;
+    letter-spacing: 2px;
+}
+
+main.container {
+    margin-top: 80px;
+}
